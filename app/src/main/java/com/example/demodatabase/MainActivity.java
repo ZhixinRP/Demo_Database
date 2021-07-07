@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     ListView lv;
     ArrayAdapter aa;
     ArrayList<Task> al;
+    boolean asc = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 dbh.InsertTask(etDescription.getText().toString(), etDate.getText().toString());
             }
         });
+
         btnGetTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,8 +63,13 @@ public class MainActivity extends AppCompatActivity {
                 }
                 tvResults.setText(txt);
 
+                if(asc) {
+                    asc = false;
+                } else {
+                    asc = true;
+                }
                 al.clear();
-                al.addAll(db.getTasks(true));
+                al.addAll(db.getTasks(asc));
                 aa.notifyDataSetChanged();
             }
         });
